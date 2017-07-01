@@ -3,8 +3,9 @@ define nodes, which create blocks.
 """
 from block import Block
 from miner import Miner
+from baseblock import BaseBlock
 
-class Node(object):
+class Node(BaseBlock):
 
     def __init__(self):
         pass
@@ -46,12 +47,6 @@ class Node(object):
         new_hash = "-- placeholder hash --"
         return Block(new_index, prev_hash, new_data, new_hash)
 
-    @staticmethod
-    def get_prev_block(self, blockchain):
-        """
-        returns most recent block object in blockchain. called by generate_new_block().
-        """
-        return blockchain[len(blockchain) - 1]
 
     def check_block(self, new_block, blockchain):
         """
