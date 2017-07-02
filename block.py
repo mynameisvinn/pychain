@@ -22,13 +22,14 @@ class Block(object):
         self.curr_hash = correct_hash
 
     def show(self):
+        """helper function for QA. should be deleted.
+        """
         print ">>> block index:", self.index
         print ">>> previous hash:", self.prev_hash
         print ">>> current hash:", self.curr_hash
         print ">>> transaction:", self.data
 
     def fetch_transaction(self):
-        """
-        return transaction record.
+        """return transaction record.
         """
         return "transaction " + str(self.index) + " : " + self.data

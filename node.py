@@ -33,10 +33,10 @@ class Node(BaseBlock):
         given a new record and an existing blockchain, this function will create
         a new block.
 
-        an existing blockchain is required because block formation depends on 
+        an existing blockchain is required because block formation depends on
         most recent block.
 
-        a block chain chain can be traced all the way back to the very first 
+        a block chain chain can be traced all the way back to the very first
         block created. as such, the blockchain contains an un-editable record of
          all the transactions made.
 
@@ -58,10 +58,13 @@ class Node(BaseBlock):
 
     def check_block(self, new_block):
         """
-        a block must satisfy the following conditions before it is added to blockchain:
+        a block must satisfy the following conditions before it is added to
+        blockchain:
+
         (1) index must be in order;
         (2) hash sequence must be in order;
-        (3) hash/seal must be valid, given previous block's hash and current block's data
+        (3) hash/seal must be valid, given previous block's hash and current
+        block's data
 
         parameters:
         -----------
