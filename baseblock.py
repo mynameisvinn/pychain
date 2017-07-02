@@ -40,7 +40,7 @@ class BaseBlock(object):
         initial_hash = BaseBlock.hash_block(initial_input)
         seal = ""
         while not BaseBlock.proof_of_work(initial_hash):
-            initial_input += "1"  # append 1 to the hash until it satisfies hash conditions
+            initial_input += "1"  # append 1 until it satisfies hash conditions
             seal += "1"
             initial_hash = BaseBlock.hash_block(initial_input)
         return seal

@@ -4,10 +4,11 @@ define nodes, which create blocks.
 from block import Block
 from baseblock import BaseBlock
 
+###############################################################################
 class Node(BaseBlock):
     """node class"""
-    def __init__(self):
-        pass
+    def __init__(self, blockchain):
+        self.blockchain_copy = blockchain
 
     def update_blockchain(self, new_block, blockchain):
         """
@@ -21,34 +22,33 @@ class Node(BaseBlock):
             print ">>> update failed"
             return False
 
-    @staticmethod
-    def get_prev_block(blockchain):
+    def get_prev_block(self, blockchain):
+        """returns most recent block object in blockchain.
         """
-        returns most recent block object in blockchain. called by generate_new_block().
+        return self.blockchain_copy[len(blockchain) - 1]
+
+    def generate_new_block(self, new_data):
         """
-        return blockchain[len(blockchain) - 1]
+        given a new record and an existing blockchain, this function will create
+        a new block.
 
-    @staticmethod
-    def generate_new_block(new_data, blockchain):
-        """
-        given a new record and an existing blockchain, this function will create a new block.
+        an existing blockchain is required because block formation depends on 
+        most recent block.
 
-        an existing blockchain is required because block formation depends on most recent block.
+        a block chain chain can be traced all the way back to the very first 
+        block created. as such, the blockchain contains an un-editable record of
+         all the transactions made.
 
-        a block chain chain can be traced all the way back to the very first block created. as such,
-        the blockchain contains an un-editable record of all the transactions made.
-
-        parameters:
-        -----------
+        parameters
+        ----------
         new_data : str
             representing data, transaction, record, etc.
-        blockchain: list of Block objects
 
-        returns:
-        --------
+        returns
+        -------
         a new Block object.
         """
-        prev_block = Node.get_prev_block(blockchain)
+        prev_block = Node.get_prev_block(self.blockchain_copy)
         new_index = prev_block.index + 1
         prev_hash = prev_block.curr_hash
         new_hash = "-- placeholder hash --"
