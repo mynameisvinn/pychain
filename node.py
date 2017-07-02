@@ -2,11 +2,10 @@
 define nodes, which create blocks.
 """
 from block import Block
-from miner import Miner
 from baseblock import BaseBlock
 
 class Node(BaseBlock):
-
+    """node class"""
     def __init__(self):
         pass
 
@@ -22,7 +21,15 @@ class Node(BaseBlock):
             print ">>> update failed"
             return False
 
-    def generate_new_block(self, new_data, blockchain):
+    @staticmethod
+    def get_prev_block(blockchain):
+        """
+        returns most recent block object in blockchain. called by generate_new_block().
+        """
+        return blockchain[len(blockchain) - 1]
+
+    @staticmethod
+    def generate_new_block(new_data, blockchain):
         """
         given a new record and an existing blockchain, this function will create a new block.
 
@@ -41,7 +48,7 @@ class Node(BaseBlock):
         --------
         a new Block object.
         """
-        prev_block = self.get_prev_block(blockchain)
+        prev_block = Node.get_prev_block(blockchain)
         new_index = prev_block.index + 1
         prev_hash = prev_block.curr_hash
         new_hash = "-- placeholder hash --"
@@ -65,22 +72,24 @@ class Node(BaseBlock):
         --------
         boolean
         """
-        most_recent_block = self.get_prev_block(blockchain)        
-        index_check = self._check_index(new_block, most_recent_block)
-        hash_seq_check = self._check_hash_sequence(new_block, most_recent_block)
+        most_recent_block = Node.get_prev_block(blockchain)
+        index_check = Node._check_index(new_block, most_recent_block)
+        hash_seq_check = Node._check_hash_sequence(new_block, most_recent_block)
         hash_valid_check = self._check_hash_validity(new_block)
 
         print ">>> checking index...", index_check
         print ">>> checking hash sequence...", hash_seq_check
         print ">>> checking hash validity...", hash_valid_check
-        
+
         return index_check & hash_seq_check & hash_valid_check
 
-    def _check_index(self, new_block, prev_block):
-        return (new_block.index == prev_block.index + 1)
+    @staticmethod
+    def _check_index(new_block, prev_block):
+        return new_block.index == prev_block.index + 1
 
-    def _check_hash_sequence(self, new_block, prev_block):
-        return (new_block.prev_hash == prev_block.curr_hash)
+    @staticmethod
+    def _check_hash_sequence(new_block, prev_block):
+        return new_block.prev_hash == prev_block.curr_hash
 
     def _check_hash_validity(self, new_block):
-        return Miner.calc_hash_seal(new_block) == new_block.curr_hash
+        return self.calc_hash_seal(new_block) == new_block.curr_hash

@@ -2,8 +2,6 @@
 defines block object.
 """
 
-from hashlib import sha1
-
 class Block(object):
     """
     the fundamental unit of the blockchain is a block. each block represents
@@ -28,24 +26,6 @@ class Block(object):
         print ">>> previous hash:", self.prev_hash
         print ">>> current hash:", self.curr_hash
         print ">>> transaction:", self.data
-
-    @staticmethod
-    def _hashhash(message):
-        return sha1(message).hexdigest()
-
-    @staticmethod
-    def _proof_of_work(hash_output):
-        """
-        in practice, a hash/seal must begin with three zeros in order to be
-        considered valid. in this example, a valid hash/seal (or proof of work)
-        will have "c" as its 0th element.
-
-        parameter:
-        ----------
-        hash_output : str
-            representing hex digest
-        """
-        return hash_output[0] is "c"
 
     def fetch_transaction(self):
         """
