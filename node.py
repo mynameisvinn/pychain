@@ -10,22 +10,23 @@ class Node(BaseBlock):
     def __init__(self, blockchain):
         self.blockchain_copy = blockchain
 
-    def update_blockchain(self, new_block, blockchain):
+    def update_blockchain(self, new_block):
         """
         a node can add a new block to a block as long it is validated.
         """
-        if self.check_block(new_block, blockchain):
+        if self.check_block(new_block):
             print ">>> successfully updated blockchain..."
-            blockchain.append(new_block)
+            self.blockchain_copy.add_block(new_block)
             return True
         else:
             print ">>> update failed"
             return False
 
-    def get_prev_block(self, blockchain):
+    def get_prev_block(self):
         """returns most recent block object in blockchain.
         """
-        return self.blockchain_copy[len(blockchain) - 1]
+        idx = self.blockchain_copy.get_length() - 1
+        return self.blockchain_copy.get_block(idx)
 
     def generate_new_block(self, new_data):
         """
@@ -48,14 +49,14 @@ class Node(BaseBlock):
         -------
         a new Block object.
         """
-        prev_block = Node.get_prev_block(self.blockchain_copy)
+        prev_block = self.get_prev_block()
         new_index = prev_block.index + 1
         prev_hash = prev_block.curr_hash
         new_hash = "-- placeholder hash --"
         return Block(new_index, prev_hash, new_data, new_hash)
 
 
-    def check_block(self, new_block, blockchain):
+    def check_block(self, new_block):
         """
         a block must satisfy the following conditions before it is added to blockchain:
         (1) index must be in order;
@@ -66,15 +67,14 @@ class Node(BaseBlock):
         -----------
         new_block : Block object
             block to be added to blockchain.
-        blockchain : list of Block objects
 
         returns:
         --------
         boolean
         """
-        most_recent_block = Node.get_prev_block(blockchain)
-        index_check = Node._check_index(new_block, most_recent_block)
-        hash_seq_check = Node._check_hash_sequence(new_block, most_recent_block)
+        prev_block = self.get_prev_block()
+        index_check = Node._check_index(new_block, prev_block)
+        hash_seq_check = Node._check_hash_sequence(new_block, prev_block)
         hash_valid_check = self._check_hash_validity(new_block)
 
         print ">>> checking index...", index_check
