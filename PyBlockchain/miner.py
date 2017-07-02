@@ -1,6 +1,6 @@
 """miner object"""
 
-from baseblock import BaseBlock
+from .baseblock import BaseBlock
 
 class Miner(BaseBlock):
     """minor object."""

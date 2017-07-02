@@ -1,8 +1,8 @@
 """
 define nodes, which create blocks.
 """
-from block import Block
-from baseblock import BaseBlock
+from .block import Block
+from .baseblock import BaseBlock
 
 ###############################################################################
 class Node(BaseBlock):
