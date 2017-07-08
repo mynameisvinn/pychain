@@ -18,3 +18,6 @@ once every 10 min, a block is given a "seal". this seal is a hash that satisfies
 
 ## how do nodes broadcast updated ledgers?
 whenever a new block is added, a node will broadcast this update to its 8+ neighbors. this is why the blockchain is viewed as an eventually consistent, append-only, database/ledger of all transactions.
+
+# todo
+[ ] implement merkle tree for transactions (http://www.righto.com/2017/07/bitcoin-mining-on-vintage-xerox-alto.html)
