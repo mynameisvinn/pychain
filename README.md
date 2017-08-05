@@ -13,8 +13,12 @@ of course, the devil is in the details, and to truly understand blockchains, id 
 ## who maintains the blockchain?
 there's no central machine or authority keeping track of things. instead, the blockchain is stored across thousands of machines on the internet (in various states), and the system works with nobody in charge. amazing.
 
-## why is mining so important?
+## why is proof of work/mining so important?
 once every 10 min, a block is given a "seal". this seal is a hash that satisfies a specific set of conditions and is purposely designed to be difficult to generate. by making it computationally expensive to mine a block, it becomes nearly impossible for any single machine/node/entity to rewrite a blockchain.
+
+Proof of work (PoW) is a clever application of hash functions. It works by calculating the hash of a message, along with many different nonces, until you find a resulting digest that meets a rare criteria. Since each hash is equally unlikely to meet that criteria, specifying a hard-to-meet criteria (perhaps a hash that starts with several leading 0s) is a way to prove that someone spent their CPU cycles. Also, a correct solution will be trivial to verify.
+
+The main property of proof-of-work is that it requires a tremendous amount of computation to create, yet very little computation to validate. Each block in the Bitcoin blockchain requires proof-of-work and all the computing power in the world dedicated to doing this takes roughly 10 minutes to find. This means that to create an alternate version of the blockchain would cost the same amount of computing power.
 
 ## how do nodes broadcast updated ledgers?
 whenever a new block is added, a node will broadcast this update to its 8+ neighbors. this is why the blockchain is viewed as an eventually consistent, append-only, database/ledger of all transactions.
