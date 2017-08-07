@@ -10,8 +10,11 @@ this project hopes to educate through simple to read python code. the attached n
 of course, the devil is in the details, and to truly understand blockchains, id suggest digging through step 2 (see `miner.py`). blockchain, as a concept, clicked for me when i understood why demonstrating proof-of-work was important.
 
 # faqs
+## decentralized database or journal?
+a blockchain is the journal of a decentralized database, not the database itself. as on the blockchain, only the history of updates are kept. in order to recover the database, you will have to scan through the entire chain and perform each update one by one.
+
 ## who maintains the blockchain?
-there's no central machine or authority keeping track of things. instead, the blockchain is stored across thousands of machines on the internet (in various states), and the system works with nobody in charge. amazing.
+no one. there's no central machine or authority keeping track of things. instead, the blockchain is stored across thousands of machines on the internet (in various states), and the system works with nobody in charge. amazing.
 
 ## why is proof of work/mining so important?
 once every 10 min, a block is given a "seal". this seal is a hash that satisfies a specific set of conditions and is purposely designed to be difficult to generate. by making it computationally expensive to mine a block, it becomes nearly impossible for any single machine/node/entity to rewrite a blockchain.
