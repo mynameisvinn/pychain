@@ -26,6 +26,9 @@ The main property of proof-of-work is that it requires a tremendous amount of co
 ## how do nodes broadcast updated ledgers?
 whenever a new block is added, a node will broadcast this update to its 8+ neighbors. this is why the blockchain is viewed as an eventually consistent, append-only, database/ledger of all transactions.
 
+## what is included in a block?
+![block header](https://chrispacia.files.wordpress.com/2013/09/block1.jpg)
+
 # todo
 [ ] implement merkle tree for transactions (http://www.righto.com/2017/07/bitcoin-mining-on-vintage-xerox-alto.html)
 
