@@ -4,14 +4,17 @@ defines block object.
 
 class Block(object):
     """
-    the fundamental unit of the blockchain is a block. each block represents
-    a "transaction".
+    the atomic unit of the blockchain is a block. each block is represented
+    by a block header. 
+
+    a block header is represented as a block hash, which is calculated by
+    the (a) previous block header, (b) a merkle root hash, and (c) a nonce.
     """
     def __init__(self, index, prev_hash, data, curr_hash):
         self.index = index
         self.prev_hash = prev_hash
         self.data = data
-        self.curr_hash = curr_hash  # current hash implicitly includes data
+        self.curr_hash = curr_hash
 
     def update_hash(self, correct_hash):
         """
