@@ -28,3 +28,6 @@ whenever a new block is added, a node will broadcast this update to its 8+ neigh
 
 # todo
 [ ] implement merkle tree for transactions (http://www.righto.com/2017/07/bitcoin-mining-on-vintage-xerox-alto.html)
+
+# reference
+* [blockchain](https://hackernoon.com/wtf-is-the-blockchain-1da89ba19348)
