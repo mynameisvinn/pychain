@@ -1,14 +1,14 @@
-"""
-defines block object.
-"""
+from hashlib import sha1
 
 class Block(object):
     """
     a blockchain is composed of blocks. each block is represented by a 
     block header. 
 
-    each block header is represented as a block hash, which is calculated by
-    the (a) previous block header, (b) a merkle root hash, and (c) a nonce.
+    each block header is represented with a block hash. 
+
+    a block hash is determined by the (a) previous block header, (b) a root 
+    hash, and (c) a nonce.
     """
     def __init__(self, data):
         self.index = 0
@@ -25,6 +25,4 @@ class Block(object):
         print ">>> nonce: ", self.nonce
 
     def fetch_transaction(self):
-        """return transaction record.
-        """
         return "transaction " + str(self.index) + " : " + self.data
