@@ -10,10 +10,10 @@ class Block(object):
     a block hash is determined by the (a) previous block header, (b) a root 
     hash, and (c) a nonce.
     """
-    def __init__(self, data):
+    def __init__(self, ls_transactions):
         self.index = 0
         self.prev_hash = "0"
-        self.data = data
+        self.ls_transactions = ls_transactions
         self.block_hash = "0"
         self.nonce = 0
 
@@ -21,8 +21,13 @@ class Block(object):
         print ">>> block hash:", self.block_hash
         print ">>> block index:", self.index
         print ">>> previous block hash:", self.prev_hash
-        print ">>> root hash:", self.data
+        print ">>> root hash:", self.root_hash
         print ">>> nonce: ", self.nonce
+        print ">>> transactions", self.ls_transactions
 
-    def fetch_transaction(self):
-        return "transaction " + str(self.index) + " : " + self.data
+    @property
+    def root_hash(self):
+        a, b, c, d = map(lambda x: sha256(x).hexdigest(), self.ls_transactions)
+        e = sha256(a + b).hexdigest()
+        f = sha256(c + d).hexdigest()
+        return sha256(e + f).hexdigest()

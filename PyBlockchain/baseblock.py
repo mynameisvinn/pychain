@@ -22,12 +22,12 @@ class BaseBlock(object):
             representing hash of new block, satisfying proof of work conditions.
         """
 
-        msg = unverified_block.prev_hash + unverified_block.data + str(unverified_block.nonce)
+        msg = unverified_block.prev_hash + unverified_block.root_hash + str(unverified_block.nonce)
         block_hash = BaseBlock.generate_block_hash(msg)
         
         while not BaseBlock.is_proof_of_work(block_hash):
             unverified_block.nonce += 1  # increment until block hash is satisfactory
-            msg = unverified_block.prev_hash + unverified_block.data + str(unverified_block.nonce)
+            msg = unverified_block.prev_hash + unverified_block.root_hash + str(unverified_block.nonce)
             block_hash = BaseBlock.generate_block_hash(msg)
         return block_hash
 
