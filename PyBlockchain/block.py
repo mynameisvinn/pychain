@@ -1,4 +1,4 @@
-from hashlib import sha1
+from hashlib import sha256
 
 class Block(object):
     """

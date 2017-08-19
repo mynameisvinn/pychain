@@ -1,6 +1,6 @@
 """Base classes for all objects."""
 
-from hashlib import sha1
+from hashlib import sha256
 
 class BaseBlock(object):
     """base block"""
@@ -8,20 +8,7 @@ class BaseBlock(object):
     @staticmethod
     def calculate_hash_block(unverified_block):
         """
-        a nonce "seals" a block to the blockchain.
-
-        we do not want this seal function to be easy to compute. if it was,
-        then a bad actor could theoretically alter past blocks and reseal it.
-
-        to make this sealing/hashing function difficult, a seal must satisfy
-        the following condition. a seal, when "mixed" with the block's data,
-        must result in an output that has three zeros. since this is a NP hard
-        problem (difficult to find a seal that satisfies that output, but easy
-        to verify), this is an acceptable "proof of work".
-
-        in order to generate an acceptable seal ("proof of work"), a miner
-        may examine 1000000s of random combindations until a hash is considered
-        acceptable.
+        a nonce "seals" a block to the blockchain. 
 
         parameters
         ----------
@@ -34,24 +21,22 @@ class BaseBlock(object):
         block_hash: hash
             representing hash of new block, satisfying proof of work conditions.
         """
+
         msg = unverified_block.prev_hash + unverified_block.data + str(unverified_block.nonce)
-        hash_block = BaseBlock.hash_block(msg)
+        block_hash = BaseBlock.generate_block_hash(msg)
         
-        # increment nonce by 1 until hash block satisfies proof of work condition
-        while not BaseBlock.proof_of_work(hash_block):
-            unverified_block.nonce += 1
+        while not BaseBlock.is_proof_of_work(block_hash):
+            unverified_block.nonce += 1  # increment until block hash is satisfactory
             msg = unverified_block.prev_hash + unverified_block.data + str(unverified_block.nonce)
-            hash_block = BaseBlock.hash_block(msg)
-        return hash_block
+            block_hash = BaseBlock.generate_block_hash(msg)
+        return block_hash
 
     @staticmethod
-    def hash_block(message):
-        """use sha1, which returns a 160 bit hash. in practice this is sha256.
-        """
-        return sha1(message).hexdigest()
+    def generate_block_hash(message):
+        return sha256(message).hexdigest()
 
     @staticmethod
-    def proof_of_work(hash_block):
+    def is_proof_of_work(hash_block):
         """
         in this toy example, a valid block hash will start with 0. this condition
         is known as "proof of work."
