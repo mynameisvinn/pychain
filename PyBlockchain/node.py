@@ -11,8 +11,7 @@ class Node(BaseBlock):
         self.blockchain_copy = blockchain
 
     def update_blockchain(self, new_block):
-        """
-        a node can add a new block to a block as long it is validated.
+        """a node can add a new block to a block as long it is validated.
         """
         if self.check_block(new_block):
             print ">>> successfully updated blockchain..."
@@ -30,15 +29,7 @@ class Node(BaseBlock):
 
     def generate_new_block(self, new_data):
         """
-        given a new record and an existing blockchain, this function will create
-        a new block.
-
-        an existing blockchain is required because block formation depends on
-        most recent block.
-
-        a block chain chain can be traced all the way back to the very first
-        block created. as such, the blockchain contains an un-editable record of
-         all the transactions made.
+        instantiate an unverified block.
 
         parameters
         ----------
@@ -49,11 +40,11 @@ class Node(BaseBlock):
         -------
         a new Block object.
         """
-        prev_block = self.get_prev_block()
-        new_index = prev_block.index + 1
-        prev_hash = prev_block.curr_hash
-        new_hash = "-- placeholder hash --"
-        return Block(new_index, prev_hash, new_data, new_hash)
+        prev_block = self.get_prev_block()  # each node has local blockchain
+        b = Block(new_data)
+        b.index = prev_block.index + 1
+        b.prev_hash = prev_block.block_hash
+        return b
 
 
     def check_block(self, new_block):
@@ -92,7 +83,7 @@ class Node(BaseBlock):
 
     @staticmethod
     def _check_hash_sequence(new_block, prev_block):
-        return new_block.prev_hash == prev_block.curr_hash
+        return new_block.prev_hash == prev_block.block_hash
 
     def _check_hash_validity(self, new_block):
-        return self.calc_hash_seal(new_block) == new_block.curr_hash
+        return self.calculate_hash_block(new_block) == new_block.block_hash

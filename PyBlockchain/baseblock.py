@@ -6,13 +6,9 @@ class BaseBlock(object):
     """base block"""
 
     @staticmethod
-    def calc_hash_seal(new_block):
+    def calculate_hash_block(unverified_block):
         """
-        cryptographic hash function are difficult to reverse, thus the input
-        value of a hash function cant be determined from its output value.
-
-        in the case of blockchain, a hash is the "seal" that finalizes the
-        addition of a block to the entire ledger.
+        a nonce "seals" a block to the blockchain.
 
         we do not want this seal function to be easy to compute. if it was,
         then a bad actor could theoretically alter past blocks and reseal it.
@@ -29,23 +25,24 @@ class BaseBlock(object):
 
         parameters
         ----------
-        new_block : Block object
+        unverified_block : Block object
             refers to a block that has not yet been added to the blockchain. we
-            will generate an acceptable hash.
+            will generate an acceptable block hash for new block.
 
         returns
         -------
-        seal: str
-            representing hash of new block. satisfies proof of work.
+        block_hash: hash
+            representing hash of new block, satisfying proof of work conditions.
         """
-        initial_input = new_block.prev_hash + new_block.data
-        initial_hash = BaseBlock.hash_block(initial_input)
-        seal = ""
-        while not BaseBlock.proof_of_work(initial_hash):
-            initial_input += "1"  # append 1 until it satisfies hash conditions
-            seal += "1"
-            initial_hash = BaseBlock.hash_block(initial_input)
-        return seal
+        msg = unverified_block.prev_hash + unverified_block.data + str(unverified_block.nonce)
+        hash_block = BaseBlock.hash_block(msg)
+        
+        # increment nonce by 1 until hash block satisfies proof of work condition
+        while not BaseBlock.proof_of_work(hash_block):
+            unverified_block.nonce += 1
+            msg = unverified_block.prev_hash + unverified_block.data + str(unverified_block.nonce)
+            hash_block = BaseBlock.hash_block(msg)
+        return hash_block
 
     @staticmethod
     def hash_block(message):
@@ -54,21 +51,18 @@ class BaseBlock(object):
         return sha1(message).hexdigest()
 
     @staticmethod
-    def proof_of_work(hash_output):
+    def proof_of_work(hash_block):
         """
-        in practice, a hash/seal must begin with three zeros in order to be
-        considered valid. 
-
-        in this example, a valid hash/seal (or proof of work) will have "c" as 
-        its 0th element.
+        in this toy example, a valid block hash will start with 0. this condition
+        is known as "proof of work."
 
         parameter
         ---------
-        hash_output : str
+        hash_block : str
             representing hex digest
 
         returns
         -------
         boolean, whether hash_output is acceptable or not.
         """
-        return hash_output[0] is "c"
+        return hash_block[0] is "0"

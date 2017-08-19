@@ -1,23 +1,16 @@
-"""miner object"""
-
 from .baseblock import BaseBlock
 
 class Miner(BaseBlock):
-    """minor object."""
     def __init__(self):
         pass
 
-    @staticmethod
-    def update_hash(new_block, correct_hash):
+    def update_block_hash(self, unverified_block, valid_hash_block):
         """
-        a miner updates the Block object with the correct hash.
-
         parameters
         ----------
-        new_block : Block object
-            miner will update this Block's hash
-        correct_hash : str
-            correct_hash for a specific Block. when reconstructed with the
-            Block's data, it would demonstrate proof of work.
+        unverified_block : Block object
+            unverified block, whose hash block will be updated by miner.
+        valid_hash_block : str
+            a hash that demonstrates proof of work.
         """
-        new_block.update_hash(correct_hash)
+        unverified_block.block_hash = valid_hash_block
