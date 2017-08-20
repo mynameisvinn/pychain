@@ -17,14 +17,6 @@ class Block(object):
         self.block_hash = "0"
         self.nonce = 0
 
-    def show(self):
-        print ">>> block hash:", self.block_hash
-        print ">>> block index:", self.index
-        print ">>> previous block hash:", self.prev_hash
-        print ">>> root hash:", self.root_hash
-        print ">>> nonce: ", self.nonce
-        print ">>> transactions", self.ls_transactions
-
     @property
     def root_hash(self):
         a, b, c, d = map(lambda x: sha256(x).hexdigest(), self.ls_transactions)
