@@ -11,11 +11,11 @@ class Node(BaseBlock):
         has a satisfactory block hash.
         """
         if self.check_block(new_block):
-            print ">>> successfully updated blockchain..."
+            print(">>> successfully updated blockchain...")
             self.blockchain_copy.add_block(new_block)
             return True
         else:
-            print ">>> update failed"
+            print(">>> update failed")
             return False
 
     def get_prev_block(self):
@@ -66,9 +66,9 @@ class Node(BaseBlock):
         hash_seq_check = Node._check_hash_sequence(unverified_block, prev_block)
         hash_valid_check = self._check_hash_validity(unverified_block)
 
-        print ">>> checking index...", index_check
-        print ">>> checking hash sequence...", hash_seq_check
-        print ">>> checking hash validity...", hash_valid_check
+        print(">>> checking index...", index_check)
+        print(">>> checking hash sequence...", hash_seq_check)
+        print(">>> checking hash validity...", hash_valid_check)
 
         return index_check & hash_seq_check & hash_valid_check
 
